@@ -41,7 +41,7 @@ GPUS=4 \
 sh tools/inference.sh configs/bpr/hrnet48_256.py ckpts/hrnet48_256.pth maskrcnn_val maskrcnn_val_refined
 ```
 
-The refinement results will be save in `maskrcnn_val_refined/refined`
+The refinement results will be saved in `maskrcnn_val_refined/refined`
 
 
 ## Models
