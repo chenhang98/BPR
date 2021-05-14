@@ -1,7 +1,5 @@
 # Look Closer to Segment Better: Boundary Patch Refinement for Instance Segmentation (CVPR 2021)
 
-
-
 ## Introduction
 
 PBR is a conceptually simple yet effective post-processing refinement framework to improve the boundary quality of instance segmentation. Following the idea of looking closer to segment boundaries better, BPR extracts and refines a series of small boundary patches along the predicted instance boundaries. The proposed BPR framework (as shown below) yields significant improvements over the Mask R-CNN baseline on the Cityscapes benchmark, especially on the boundary-aware metrics. 
@@ -16,6 +14,48 @@ For more details, please refer to our [paper](https://arxiv.org/abs/2104.05239).
 ## Installation
 
 Please refer to [INSTALL.md](docs/install.md).
+
+
+## Training
+
+### Prepare patches dataset [optional]
+
+First, you need to generate the instance segmentation results on the Cityscapes training and validation set, as the following format:
+
+```
+maskrcnn_train
+- aachen_000000_000019_leftImg8bit_pred.txt
+- aachen_000001_000019_leftImg8bit_0_person.png
+- aachen_000001_000019_leftImg8bit_10_car.png
+- ...
+
+maskrcnn_val
+- frankfurt_000001_064130_leftImg8bit_pred.txt
+- frankfurt_000001_064305_leftImg8bit_0_person.png
+- frankfurt_000001_064305_leftImg8bit_10_motorcycle.png
+- ...
+```
+Then use the provided script to generate the training set:
+
+```
+sh tools/prepare_dataset.sh \
+  maskrcnn_train \
+  maskrcnn_val \
+  maskrcnn_r50
+```
+Note that this step can take about 2 hours. Feel free to skip it by downloading the [processed training set](https://cloud.tsinghua.edu.cn/f/ea643dc32f824dbba28a/?dl=1).
+
+
+### Train the network
+
+Point `DATA_ROOT` to the patches dataset and run the training script 
+
+```
+DATA_ROOT=maskrcnn_r50/patches \
+bash tools/dist_train.sh \
+  configs/bpr/hrnet18s_128.py \
+  4
+```
 
 
 ## Inference
@@ -41,7 +81,9 @@ GPUS=4 \
 sh tools/inference.sh configs/bpr/hrnet48_256.py ckpts/hrnet48_256.pth maskrcnn_val maskrcnn_val_refined
 ```
 
-The refinement results will be saved in `maskrcnn_val_refined/refined`
+The refinement results will be saved in `maskrcnn_val_refined/refined`.
+
+For COCO model, use [tools/inference_coco.sh](tools/inference_coco.sh) instead.
 
 
 ## Models
@@ -50,6 +92,7 @@ The refinement results will be saved in `maskrcnn_val_refined/refined`
 | :------: | :------: | :------: |
 | HRNet-18s | Cityscapes | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/a15da4d679654111ba89/?dl=1) |
 | HRNet-48 | Cityscapes | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/54d7c737540444b38b18/?dl=1) |
+| HRNet-18s | COCO | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/342fae1311b748a8b396/?dl=1) |
 
 ## Acknowledgement
 
