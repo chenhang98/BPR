@@ -35,6 +35,15 @@ maskrcnn_val
 - frankfurt_000001_064305_leftImg8bit_10_motorcycle.png
 - ...
 ```
+
+The content of the txt file is the same as the standard format required by [cityscape script](https://github.com/mcordts/cityscapesScripts/blob/master/cityscapesscripts/evaluation/evalInstanceLevelSemanticLabeling.py), e.g.:
+
+```
+frankfurt_000000_000294_leftImg8bit_0_person.png 24 0.9990299940109253
+frankfurt_000000_000294_leftImg8bit_1_person.png 24 0.9810258746147156
+...
+```
+
 Then use the provided script to generate the training set:
 
 ```
