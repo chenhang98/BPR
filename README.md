@@ -97,11 +97,11 @@ For COCO model, use [tools/inference_coco.sh](tools/inference_coco.sh) instead.
 
 ## Models
 
-| Backbone | Dataset | Checkpoint |
-| :------: | :------: | :------: |
-| HRNet-18s | Cityscapes | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/a15da4d679654111ba89/?dl=1) |
-| HRNet-48 | Cityscapes | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/54d7c737540444b38b18/?dl=1) |
-| HRNet-18s | COCO | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/342fae1311b748a8b396/?dl=1) |
+| Backbone | Dataset | Config | Checkpoint |
+| :------: | :------: | :------: | :------: |
+| HRNet-18s | Cityscapes | [hrnet18s_128.py](configs/bpr/hrnet18s_128.py) | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/a15da4d679654111ba89/?dl=1) |
+| HRNet-48 | Cityscapes | [hrnet48_256.py](configs/bpr/hrnet48_256.py) | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/54d7c737540444b38b18/?dl=1) |
+| HRNet-18s | COCO | [hrnet18s_128.py](configs/bpr/hrnet18s_128.py) | [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/342fae1311b748a8b396/?dl=1) |
 
 ## Acknowledgement
 
