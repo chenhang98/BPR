@@ -19,7 +19,7 @@ Please refer to [INSTALL.md](docs/install.md).
 ## Training
 
 In this and the next section, we introduce how to train and inference BPR on the Cityscapes dataset. 
-If you want to apply it to a COCO-like dataset, please refer to the next section.
+If you want to apply it to a COCO-like dataset, please refer to the section [on-other-datasets](https://github.com/tinyalpha/BPR#on-other-datasets).
 
 We assume that the Cityscapes dataset is placed as follows:
 ```
