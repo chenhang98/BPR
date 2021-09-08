@@ -18,6 +18,25 @@ Please refer to [INSTALL.md](docs/install.md).
 
 ## Training
 
+In this and the next section, we introduce how to train and inference BPR on the Cityscapes dataset. 
+If you want to apply it to a COCO-like dataset, please refer to the next section.
+
+We assume that the Cityscapes dataset is placed as follows:
+```
+BPR
+├── data
+│   ├── cityscapes
+│   │   ├── annotations
+│   │   ├── leftImg8bit
+│   │   │   ├── train
+│   │   │   ├── val
+│   │   ├── gtFine
+│   │   │   ├── train
+│   │   │   ├── val
+```
+
+
+
 ### Prepare patches dataset [optional]
 
 First, you need to generate the instance segmentation results on the Cityscapes training and validation set, as the following format:
@@ -92,7 +111,84 @@ sh tools/inference.sh configs/bpr/hrnet48_256.py ckpts/hrnet48_256.pth maskrcnn_
 
 The refinement results will be saved in `maskrcnn_val_refined/refined`.
 
-For COCO model, use [tools/inference_coco.sh](tools/inference_coco.sh) instead.
+
+## On other datasets
+
+We also provide training and inference scripts suitable for the COCO dataset.
+For those who want to apply BPR to their own datasets, we recommend converting them to the COCO format first.
+
+We assume that the folder structure of the COCO data set is as follows:
+
+```
+BPR
+├── data
+│   ├── coco
+│   │   ├── annotations
+│   │   ├── train2017
+│   │   ├── val2017
+│   │   ├── test2017
+```
+
+### Training
+
+First, a binary segmentation dataset needs to be constructed for training and validation of the Refinement Network.
+
+This step requires coarse segmentation results (can come from any instance segmenter) on the training set and test set of COCO. Assuming that these two files are `mask_rcnn_r50.train.segm.json` and `mask_rcnn_r50.val.segm.json`, you only need to execute the following commands:
+
+```
+IOU_THRESH=0.15 \
+sh tools/prepare_dataset_coco.sh \
+  mask_rcnn_r50.train.segm.json \
+  mask_rcnn_r50.val.segm.json \
+  maskrcnn_r50 \
+  70000
+```
+
+The dataset will be saved in `maskrcnn_r50/patches`. 
+
+`IOU_THRESH=0.15` is used to control the threshold of nms.
+
+The last argument (70000) means that only 70000 instances are sampled as the training set, since there are too many instances in the COCO dataset.
+If you find that your computer cannot hold so many patches, you can try to reduce this value (may harm performance). 
+
+In our paper, we used these two values for COCO dataset.
+
+\
+After building the dataset, use the following commands to train the Refinement Network:
+
+```
+DATA_ROOT=maskrcnn_r50/patches \
+bash tools/dist_train.sh \
+  configs/bpr/hrnet18s_128.py \
+  4
+```
+
+### Inference
+
+Use the following command to run inference:
+
+```
+IOU_THRESH=0.25 \
+IMG_DIR=data/coco/val2017 \
+GT_JSON=data/coco/annotations/instances_val2017.json \
+GPUS=4 \
+sh tools/inference_coco.sh \
+  configs/bpr/hrnet18s_128.py \
+  hrnet18s_coco-c172955f.pth \
+  mask_rcnn_r50.val.segm.json \
+  mask_rcnn_r50.val.refined.json
+```
+
+`IOU_THRESH` means the threshold of nms (see our paper for details). 
+
+`IMG_DIR` and `GT_JSON` indicate the image folder and ground truth json file of COCO dataset.
+
+`configs/bpr/hrnet18s_128.py` and `hrnet18s_coco-c172955f.pth` indicate the config file and checkpoint of Refinement Network.
+
+`mask_rcnn_r50.val.segm.json` is the coasre instance segmentation results to be refined.
+
+`mask_rcnn_r50.val.refined.json` saved the refined results.
+
 
 
 ## Models
