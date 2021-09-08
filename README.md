@@ -133,7 +133,7 @@ BPR
 
 First, a binary segmentation dataset needs to be constructed for training and validation of the Refinement Network.
 
-This step requires coarse segmentation results (can come from any instance segmenter) on the training set and test set of COCO. Assuming that these two files are `mask_rcnn_r50.train.segm.json` and `mask_rcnn_r50.val.segm.json`, you only need to execute the following commands:
+This step requires coarse segmentation results (can come from any instance segmenter) on the training set and validation set of COCO. Assuming that these two files are `mask_rcnn_r50.train.segm.json` and `mask_rcnn_r50.val.segm.json`, you only need to execute the following commands:
 
 ```
 IOU_THRESH=0.15 \
