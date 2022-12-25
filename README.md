@@ -1,5 +1,12 @@
 # Look Closer to Segment Better: Boundary Patch Refinement for Instance Segmentation (CVPR 2021)
 
+This is the official repo for ["Look Closer to Segment Better: Boundary Patch Refinement for Instance Segmentation"](https://arxiv.org/abs/2104.05239).
+
+
+## Updates
+
+* [2022-12-25]: Added a [demo](demo/inference_img.ipynb) for refining on a single image more conveniently.
+
 ## Introduction
 
 PBR is a conceptually simple yet effective post-processing refinement framework to improve the boundary quality of instance segmentation. Following the idea of looking closer to segment boundaries better, BPR extracts and refines a series of small boundary patches along the predicted instance boundaries. The proposed BPR framework (as shown below) yields significant improvements over the Mask R-CNN baseline on the Cityscapes benchmark, especially on the boundary-aware metrics. 
@@ -128,6 +135,11 @@ BPR
 │   │   ├── val2017
 │   │   ├── test2017
 ```
+
+## On single image
+
+See [demo/inference_img.ipynb](demo/inference_img.ipynb) and [demo/inference_img.py](demo/inference_img.py) for a demo usage.
+
 
 ### Training
 
