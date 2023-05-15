@@ -136,10 +136,6 @@ BPR
 │   │   ├── test2017
 ```
 
-## On single image
-
-See [demo/inference_img.ipynb](demo/inference_img.ipynb) and [demo/inference_img.py](demo/inference_img.py) for a demo usage.
-
 
 ### Training
 
@@ -201,6 +197,10 @@ sh tools/inference_coco.sh \
 
 `mask_rcnn_r50.val.refined.json` saved the refined results.
 
+
+## On single image
+
+See [demo/inference_img.ipynb](demo/inference_img.ipynb) and [demo/inference_img.py](demo/inference_img.py) for a demo usage.
 
 
 ## Models
