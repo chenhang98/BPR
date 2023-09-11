@@ -20,7 +20,7 @@ For more details, please refer to our [paper](https://arxiv.org/abs/2104.05239).
 
 ## Installation
 
-Please refer to [INSTALL.md](docs/install.md).
+Please refer to [INSTALL.md](docs/install.md) for building mmsegmentation. Our code was tested with mmsegmentation==0.7.0 and mmcv==1.1.6.
 
 
 ## Training
